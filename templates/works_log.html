@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    table {
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid black;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+</style>
+<div align="center">
+
+    <h2>Works log</h2>
+    {% for i in works %}
+    <h3><strong>Action # {{ loop.index }}</strong></h3>
+    <table align="center" width="95%">
+        <tr style="background-color: #A8ACA9;">
+            <td width="30%">Title of activity</td>
+            <td width="18">Team leader</td>
+            <td width="18%">Duration</td>
+            <td width="20%">List of collaborators</td>
+            <td width="17%">Is finished</td>
+        </tr>
+        <tr>
+            <td>{{ i.job }}</td>
+            <td>{{ session.query(User).filter(User.id == i.team_leader)[0].name + session.query(User).filter(User.id == i.team_leader)[0].surname }}</td>
+            <td>{{ i.work_size }} hours</td>
+            <td>{{ i.collaborators }}</td>
+            {% if i.is_finished %}
+            <td>Is finished</td>
+            {% else %}
+            <td>Is not finished yet</td>
+            {% endif %}
+        </tr>
+    </table>
+    {% endfor %}
+</div>
+
+{% endblock %}
