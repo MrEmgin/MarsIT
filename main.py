@@ -26,6 +26,28 @@ def works():
     return render_template('works_log.html', **params)
 
 
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'GET':
+        return render_template('register_form.html', title='Register form', warning='')
+    elif request.method == 'POST':
+        user = User()
+        user.surname = request.form['surname']
+        user.name = request.form['name']
+        user.age = int(request.form['age'])
+        user.position = request.form['position']
+        user.speciality = request.form['speciality']
+        user.address = request.form['address']
+        user.email = request.form['email']
+        user.hashed_password = request.form['password']
+        if user.hashed_password != request.form['repeat']:
+            return render_template('register_form.html', title='Register form', warning='Passwords are different!')
+
+        session.add(user)
+        session.commit()
+        return 'Sent<br>' + str(user)
+
+
 db_session.global_init('db/data.sqlite')
 session = db_session.create_session()
 
