@@ -3,6 +3,7 @@ from flask import render_template, redirect, request
 from data import db_session
 from data.users import User
 from data.jobs import Jobs
+from random import randint
 import datetime
 
 app = Flask(__name__)
@@ -39,7 +40,7 @@ def register():
         user.speciality = request.form['speciality']
         user.address = request.form['address']
         user.email = request.form['email']
-        user.hashed_password = request.form['password']
+        user.set_password(request.form['password'])
         if user.hashed_password != request.form['repeat']:
             return render_template('register_form.html', title='Register form', warning='Passwords are different!')
 
@@ -52,4 +53,8 @@ db_session.global_init('db/data.sqlite')
 session = db_session.create_session()
 
 if __name__ == '__main__':
+    for user in session.query(User).all():
+        user.set_password(user.hashed_password)
+    session.commit()
+    quit()
     app.run(host='127.0.0.1', port=8080)
