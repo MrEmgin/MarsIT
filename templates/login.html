@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+    {{ form.csrf_token }}
+</div>
+<div align="center">
+    <h2>Login form</h2><br>
+
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+
+        {{ form.email.label }}
+        {{ form.email(class="form-control") }}
+
+        {{ form.password.label }}
+        {{ form.password(class="form-control", type="password") }}
+
+        {% for error in form.password.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+        {% endfor %}
+
+        {{ form.remember_me() }}
+
+        {{ form.submit(type='submit', class="btn btn-primary") }}
+
+    </form>
+</div>
+{% endblock %}
+

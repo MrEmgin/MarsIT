@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Adding a job</h1>
+<div align="center">
+    <form method="post" action="">
+        {{ form.job.label }}
+        {{ form.job }}<br>
+
+        {{ form.team_leader.label }}
+        {{ form.team_leader }}<br>
+
+        {{ form.work_size.label }}
+        {{ form.work_size }}<br>
+
+        {{ form.collaborators.label }}
+        {{ form.collaborators }}<br>
+
+        {{ form.end_date.label }}
+        {{ form.end_date }}<br>
+
+        {{ form.is_finished.label }}
+        {{ form.is_finished }}<br>
+
+        {{ form.submit(class='btn btn-primary', type='submit') }}
+    </form>
+</div>
+
+{% endblock %}
