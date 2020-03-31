@@ -15,6 +15,7 @@ class Jobs(SqlAlchemyBase, UserMixin):
     start_date = sqlalchemy.Column(sqlalchemy.DateTime, default=datetime.datetime.now())
     end_date = sqlalchemy.Column(sqlalchemy.DateTime)
     is_finished = sqlalchemy.Column(sqlalchemy.Boolean)
+    author = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('users.id'), default=1)
 
     def __repr__(self):
         res = f'<Job> {self.job}'

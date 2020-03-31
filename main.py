@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import render_template, redirect, request, make_response
+from flask import render_template, redirect, request, make_response, abort
 from flask import session as sess
 
 from flask_login import LoginManager
@@ -40,17 +40,20 @@ app.config['SECRET_KEY'] = 'MarsIT1535'
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('base.html', title='Main page')
+    return render_template('base.html', title='Start page')
 
 
 @app.route('/works')
+@login_required
 def works():
     session = db_session.create_session()
     works = session.query(Jobs).all()
     params = {'title': 'Works log',
               'session': session,
               'works': works,
-              'User': User
+              'User': User,
+              'deleted': False,
+              'warnings': []
               }
     return render_template('works_log.html', **params)
 
@@ -103,7 +106,6 @@ def session_test():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    print(current_user)
     form = LoginForm()
     if form.validate_on_submit():
         session = db_session.create_session()
@@ -116,6 +118,7 @@ def login():
 
 
 @app.route('/add_work', methods=['GET', 'POST'])
+@login_required
 def add_work():
     form = AddWorkForm()
     if request.method == 'POST':
@@ -140,6 +143,7 @@ def add_work():
 
 
 @app.route('/edit_work/<int:id>', methods=['POST', 'GET'])
+@login_required
 def edit_work(id):
     form = AddWorkForm()
     session = db_session.create_session()
@@ -152,6 +156,9 @@ def edit_work(id):
             warnings.append(':( Job is not found :( (404)')
         else:
             data = [job.job, job.team_leader, job.work_size, job.collaborators, job.end_date, job.is_finished]
+            if job.author != current_user.id and current_user.id != 1:
+                warnings.append('Access denied.')
+                data = [''] * 6
         return render_template('add_work.html', title='Edit work', form=form, warnings=warnings, data=data)
     elif request.method == 'POST':
         data = form.end_date.data
@@ -169,6 +176,23 @@ def edit_work(id):
     return render_template('base.html', title='test')
 
 
+@app.route('/delete_work/<int:id>')
+@login_required
+def delete_work(id):
+    global warnings
+    session = db_session.create_session()
+    job = session.query(Jobs).filter(Jobs.id == id).first()
+    if not job:
+        return redirect('/works', code=302)
+    if current_user.id != 1 and current_user.id != job.author:
+        warnings.append("You don't have enough rights to delete this")
+        return redirect('/works', code=302)
+    session.delete(job)
+    session.commit()
+
+    return redirect('/works', code=302)
+
+
 @app.route('/logout')
 @login_required
 def logout():
@@ -180,6 +204,8 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 db_session.global_init('db/data.sqlite')
+
+warnings = []
 
 
 @login_manager.user_loader

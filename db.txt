@@ -1,0 +1,12 @@
+1	3	Deployment of residental modules 1 and 2	15	2, 3	2020-03-28 11:27:00.000000	2020-04-10 11:00:00.000000	0
+2	1	Exploration of mineral resources	24	3, 4	2020-03-28 11:27:00.000000	2020-04-10 11:00:00.000000	0
+3	2	Development of management systems	16	1, 4	2020-03-28 11:27:00.000000	2020-04-10 11:00:00.000000	0
+
+
+
+
+1	Ovcharov	Roman	23	Middle engineer	Engineer of ecosystems	module_2	roma123@mars.org	pbkdf2:sha256:150000$DgDSsmFf$0747e24c9817d5f1fe29f37fd4d6599c4a5ce9bdbf58d3d850b87c4ff5504efa	2020-03-28 11:35:22.375994
+2	Bakin	Denis	21	Middle engineer	Engineer of technical equipment	module_3	MrEmgin@mars.org	pbkdf2:sha256:150000$KI9UZrgz$24c16a5435240f8ac67603c4302d2aa0362a9aaa905d9442437293a24fc1f2d5	2020-03-28 11:35:22.378913
+3	Johnson	Mike	32	Captain	Captain	module_1	Marsian@mars.org	pbkdf2:sha256:150000$j9meHVhr$93148831819af66f8f40b476437f170a9108a0d85029a587fb819ab82742e456	2020-03-28 11:35:22.378913
+4	Archer	Tom	26	Senior engineer	Navigator	module_1	Archer@mars.org	pbkdf2:sha256:150000$MHjyuNyu$dc94184e2a2eba1f6f6688ebb58c5500c4eec652a26dd7148ee15f1e3cd9ee76	2020-03-28 11:35:22.378913
+5	Бакин	Денис	16	Junior developer	Server development	module_3	123@mail.ru	pbkdf2:sha256:150000$C5Iyshhi$829c52e3cf39501984a8f25ee3571617f4e8834159f2c84d6c9579ff9ffbeb07	2020-03-29 19:51:43.288066
