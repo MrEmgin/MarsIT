@@ -31,7 +31,7 @@ table, th, td {
         </tr>
         <tr>
             <td>{{ i.job }}</td>
-            <td>{{ session.query(User).filter(User.id == i.team_leader)[0].name + session.query(User).filter(User.id == i.team_leader)[0].surname }}</td>
+            <td>{{ session.query(User).filter(User.id == i.team_leader)[0].name + ' ' + session.query(User).filter(User.id == i.team_leader)[0].surname }}</td>
             <td>{{ i.work_size }} hours</td>
             <td>{{ i.collaborators }}</td>
             {% if i.is_finished %}
@@ -41,6 +41,7 @@ table, th, td {
             {% endif %}
         </tr>
     </table>
+    <a class="btn btn-primary" href="/edit_work/{{ loop.index }}">Edit</a>
     {% endfor %}
 </div>
 

@@ -3,25 +3,30 @@
 {% block content %}
 
 <h1>Adding a job</h1>
+<div style="background-color: #F77368;" id="warnings">
+    {% for i in warnings %}
+    <label>{{ i }}</label><br>
+    {% endfor %}
+</div>
 <div align="center">
     <form method="post" action="">
         {{ form.job.label }}
-        {{ form.job }}<br>
+        {{ form.job(value=data[0]) }}<br>
 
         {{ form.team_leader.label }}
-        {{ form.team_leader }}<br>
+        {{ form.team_leader(value=data[1]) }}<br>
 
         {{ form.work_size.label }}
-        {{ form.work_size }}<br>
+        {{ form.work_size(value=data[2]) }}<br>
 
         {{ form.collaborators.label }}
-        {{ form.collaborators }}<br>
+        {{ form.collaborators(value=data[3]) }}<br>
 
         {{ form.end_date.label }}
-        {{ form.end_date }}<br>
+        {{ form.end_date(value=data[4]) }}<br>
 
         {{ form.is_finished.label }}
-        {{ form.is_finished }}<br>
+        {{ form.is_finished(value=data[5]) }}<br>
 
         {{ form.submit(class='btn btn-primary', type='submit') }}
     </form>

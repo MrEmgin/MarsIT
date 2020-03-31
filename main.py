@@ -134,9 +134,39 @@ def add_work():
 
         session.add(job)
         session.commit()
-        return render_template('base.html', title='Success')
+        return redirect('/works', code=302)
 
-    return render_template('add_work.html', title='Adding work', form=form)
+    return render_template('add_work.html', title='Adding work', form=form, warnings=[], data=[''] * 6)
+
+
+@app.route('/edit_work/<int:id>', methods=['POST', 'GET'])
+def edit_work(id):
+    form = AddWorkForm()
+    session = db_session.create_session()
+    warnings = []
+    data = []
+    job = session.query(Jobs).filter(Jobs.id == id).first()
+
+    if request.method == 'GET':
+        if not job:
+            warnings.append(':( Job is not found :( (404)')
+        else:
+            data = [job.job, job.team_leader, job.work_size, job.collaborators, job.end_date, job.is_finished]
+        return render_template('add_work.html', title='Edit work', form=form, warnings=warnings, data=data)
+    elif request.method == 'POST':
+        data = form.end_date.data
+        date = datetime.datetime.strptime(data, "%Y-%m-%d %H:%M:%S")
+
+        job.team_leader = form.team_leader.data
+        job.job = form.job.data
+        job.work_size = form.work_size.data
+        job.collaborators = form.collaborators.data
+        job.end_date = date
+        job.is_finished = form.is_finished.data
+
+        session.commit()
+        return redirect('/works', code=302)
+    return render_template('base.html', title='test')
 
 
 @app.route('/logout')
